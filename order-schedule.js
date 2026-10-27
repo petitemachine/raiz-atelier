@@ -7,7 +7,8 @@
     const result=[];
     for(let offset=1;offset<=days;offset++){
       const date=new Date(base);date.setUTCDate(base.getUTCDate()+offset);
-      const weekdays=seasonal&&conchas?[4]:seasonal?[0,4]:conchas?[1,4]:[0,1,4];
+      const november=date.getUTCFullYear()===2026&&date.getUTCMonth()===10;
+      const weekdays=november?[1,4]:seasonal&&conchas?[4]:seasonal?[0,4]:conchas?[1,4]:[0,1,4];
       if(!weekdays.includes(date.getUTCDay()))continue;
       // Fixed Irish-local cutoff, rather than a rolling number of hours.
       if(offset===1&&+local.hour>=18)continue;

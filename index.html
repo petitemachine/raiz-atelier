@@ -370,7 +370,7 @@
         <section class="field-wide" id="basket-summary" aria-label="Your basket"><h3>Your basket</h3><div id="basket-lines" aria-live="polite"></div><p id="basket-total"></p><a href="#menu">Continue shopping ↑</a></section>
         <div><label for="customer-name">Name</label><input id="customer-name" autocomplete="name" required></div>
         <div><label for="customer-contact">Email or phone</label><input id="customer-contact" required></div>
-        <div class="field-wide"><label for="preferred-date">Delivery / collection date</label><p id="schedule-message" role="status"></p><select id="preferred-date" required><option value="">Choose a date</option></select><div class="date-notice-grid"><div class="date-notice">Conchas: Mondays and Thursdays. Order by 6 pm the day before. Pan de Muerto: Thursdays and Sundays until 5 November. Order by 6 pm the day before.</div><div class="date-notice">Limited orders per bake. All times are Irish local time.</div></div></div>
+        <div class="field-wide"><label for="preferred-date">Delivery / collection date</label><p id="schedule-message" role="status"></p><select id="preferred-date" required><option value="">Choose a date</option></select><div class="date-notice-grid"><div class="date-notice">November baking days: Mondays and Thursdays. Order by 6 pm the day before. Final Pan de Muerto bake: 5 November.</div><div class="date-notice">Limited orders per bake. All times are Irish local time.</div></div></div>
         <div class="field-wide"><label for="fulfilment">Collection or delivery</label><select id="fulfilment"><option>Collection in Cherrywood</option><option>Delivery</option><option value="Agreed meeting point">Agreed meeting point</option></select></div>
         <div class="field-wide" id="delivery-field" hidden><label for="delivery-area">Delivery address / area</label><input id="delivery-area" autocomplete="street-address"><p>Delivery fee added to your total.</p></div>
         <div class="field-wide"><label for="order-details">Notes (optional)</label><textarea id="order-details" placeholder="For an agreed meeting point, tell us the proposed place and time. Add any other order details here."></textarea></div>
@@ -485,7 +485,7 @@
       const selected=dateInput.value;
       const mixed=cart.some(item=>item.name.includes('Pan de Muerto'))&&cart.some(item=>item.name.includes('Conchas'));
       const notice=document.getElementById('schedule-message');
-      notice.textContent=mixed?(document.documentElement.lang==='es'?'Tu pedido incluye conchas y pan de muerto: la fecha compartida es el jueves, hasta el 5 de noviembre.':'Your order includes conchas and Pan de Muerto: the shared date is Thursday, through 5 November.'):'';
+      notice.textContent=mixed?(document.documentElement.lang==='es'?'Tu pedido incluye conchas y pan de muerto. En noviembre puedes elegir el lunes 2 o el jueves 5, hasta las 18:00 del día anterior.':'Your order includes conchas and Pan de Muerto. November dates are Monday 2 and Thursday 5, with a 6 pm cutoff the day before.'):'';
       dateInput.replaceChildren(new Option('Choose a date',''));
       const fmt=new Intl.DateTimeFormat(document.documentElement.lang==='es'?'es-ES':'en-IE',{timeZone:'UTC',weekday:'long',day:'numeric',month:'long'});
       RaizSchedule.availableDates(new Date(),35,cart.some(item=>item.name.includes('Pan de Muerto')),cart.some(item=>item.name.includes('Conchas'))).forEach(value=>{
