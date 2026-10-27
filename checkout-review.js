@@ -27,13 +27,11 @@
   const methodNote=document.createElement('p');methodNote.setAttribute('role','status');
   fulfilment.parentElement.append(methodNote);
   function syncFulfilment(){
-    const monday=RaizSchedule.pickupOnly(dateInput.value);
-    Array.from(fulfilment.options).forEach(option=>{option.disabled=monday&&option.value!=='Collection in Cherrywood';});
-    if(monday&&fulfilment.value!=='Collection in Cherrywood'){fulfilment.value='Collection in Cherrywood';review.hidden=true;}
+    Array.from(fulfilment.options).forEach(option=>{option.disabled=false;});
     const delivery=fulfilment.value==='Delivery';
     document.getElementById('delivery-field').hidden=!delivery;
     document.getElementById('delivery-area').required=delivery;
-    methodNote.textContent=spanish()?'Los lunes: solo recogida en Cherrywood. Los jueves: recogida, entrega o punto de encuentro acordado.':'Mondays: collection in Cherrywood only. Thursdays: collection, delivery or an agreed meeting point.';
+    methodNote.textContent=spanish()?'Domingos y jueves: recogida en Cherrywood, entrega o punto de encuentro acordado.':'Sundays and Thursdays: collection in Cherrywood, delivery or an agreed meeting point.';
   }
   dateInput.addEventListener('change',syncFulfilment);
   fulfilment.addEventListener('change',syncFulfilment);

@@ -7,8 +7,7 @@
     const result=[];
     for(let offset=1;offset<=days;offset++){
       const date=new Date(base);date.setUTCDate(base.getUTCDate()+offset);
-      const november=date.getUTCFullYear()===2026&&date.getUTCMonth()===10;
-      const weekdays=november?[1,4]:seasonal&&conchas?[4]:seasonal?[0,4]:conchas?[1,4]:[0,1,4];
+      const weekdays=[0,4];
       if(!weekdays.includes(date.getUTCDay()))continue;
       // Fixed Irish-local cutoff, rather than a rolling number of hours.
       if(offset===1&&+local.hour>=18)continue;
@@ -18,7 +17,6 @@
     }
     return result;
   }
-  function pickupOnly(value){return /^\d{4}-\d{2}-\d{2}$/.test(value)&&new Date(value+'T12:00:00Z').getUTCDay()===1;}
-  root.RaizSchedule={availableDates,pickupOnly};
+  root.RaizSchedule={availableDates};
   if(typeof module!=='undefined')module.exports=root.RaizSchedule;
 })(typeof window==='undefined'?globalThis:window);
