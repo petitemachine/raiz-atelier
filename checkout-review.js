@@ -39,7 +39,7 @@
     const labels={
       'Collection in Cherrywood':spanish()?'Recogida en Cherrywood — GRATIS':'Collection in Cherrywood — FREE',
       'Delivery':spanish()?'Entrega a domicilio — coste por confirmar':'Local delivery — fee to be confirmed',
-      'Agreed meeting point':spanish()?'Punto de encuentro — €2; gratis con 7 o más conchas':'Agreed meeting point — €2; FREE with 7+ conchas'
+      'Agreed meeting point':spanish()?'Punto de encuentro — GRATIS durante el lanzamiento':'Agreed meeting point — FREE during launch'
     };
     Array.from(fulfilment.options).forEach(option=>{const value=option.value;option.value=value;option.disabled=false;option.textContent=labels[value]||option.textContent;});
     const delivery=fulfilment.value==='Delivery';

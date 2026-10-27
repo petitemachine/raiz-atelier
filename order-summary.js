@@ -18,7 +18,8 @@
     const conchaDiscount = conchas>=4 ? conchas*50 : 0;
     const gross = lines.reduce((n,i)=>n+i.cents,0);
     const conchaQuantity=lines.filter(i=>i.name.includes('Conchas')).reduce((n,i)=>n+i.quantity,0);
-    const fee=method==='Delivery'?null:method==='Agreed meeting point'?(conchaQuantity>6?0:200):0;
+    // Launch offer: collection and agreed meeting points are free for every order.
+    const fee=method==='Delivery'?null:0;
     const subtotal=gross-panDiscount-conchaDiscount;
     return {lines,panDiscount,conchaDiscount,subtotal,fee,total:subtotal+(fee||0),conchaQuantity,quantity:lines.reduce((n,i)=>n+i.quantity,0)};
   }
