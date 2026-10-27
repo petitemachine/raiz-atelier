@@ -18,6 +18,7 @@
     }
     return result;
   }
-  root.RaizSchedule={availableDates};
+  function pickupOnly(value){return /^\d{4}-\d{2}-\d{2}$/.test(value)&&new Date(value+'T12:00:00Z').getUTCDay()===1;}
+  root.RaizSchedule={availableDates,pickupOnly};
   if(typeof module!=='undefined')module.exports=root.RaizSchedule;
 })(typeof window==='undefined'?globalThis:window);

@@ -24,6 +24,19 @@
       if(choice.dataset.name.includes('Pan de Muerto'))choice.querySelectorAll('button[aria-label^="Add one"]').forEach(button=>button.disabled=closed);
     });
   }
+  const methodNote=document.createElement('p');methodNote.setAttribute('role','status');
+  fulfilment.parentElement.append(methodNote);
+  function syncFulfilment(){
+    const monday=RaizSchedule.pickupOnly(dateInput.value);
+    Array.from(fulfilment.options).forEach(option=>{option.disabled=monday&&option.value!=='Collection in Cherrywood';});
+    if(monday&&fulfilment.value!=='Collection in Cherrywood'){fulfilment.value='Collection in Cherrywood';review.hidden=true;}
+    const delivery=fulfilment.value==='Delivery';
+    document.getElementById('delivery-field').hidden=!delivery;
+    document.getElementById('delivery-area').required=delivery;
+    methodNote.textContent=spanish()?'Los lunes: solo recogida en Cherrywood. Los jueves: recogida, entrega o punto de encuentro acordado.':'Mondays: collection in Cherrywood only. Thursdays: collection, delivery or an agreed meeting point.';
+  }
+  dateInput.addEventListener('change',syncFulfilment);
+  fulfilment.addEventListener('change',syncFulfilment);
   function remember(){try{sessionStorage.setItem(storageKey,JSON.stringify(cart));}catch{}}
   function syncQuantities(){document.querySelectorAll('#menu .basket-choice').forEach(choice=>{
     choice.querySelectorAll('output').forEach(output=>{
@@ -53,7 +66,7 @@
     document.getElementById('basket-total').textContent=cart.length?'Subtotal: '+currency(summary.total):'';
     document.querySelectorAll('.cart-link').forEach(a=>a.textContent=(spanish()?'Carrito':'Basket')+' ('+summary.quantity+')');
     submit.textContent=spanish()?'Revisar pedido completo →':'Review complete order →';
-    syncQuantities();remember();review.hidden=true;populateDates();updateSeason();
+    syncQuantities();remember();review.hidden=true;populateDates();updateSeason();syncFulfilment();
   };
   try{const saved=JSON.parse(sessionStorage.getItem(storageKey)||'[]');RaizOrder.calculate(saved);if(Array.isArray(saved)&&saved.length)cart.splice(0,cart.length,...saved);}catch{}
   function signature(){return JSON.stringify([cart,...['customer-name','customer-contact','preferred-date','fulfilment','delivery-area','order-details'].map(id=>document.getElementById(id).value)]);}
@@ -82,6 +95,7 @@
     if(conchas&&conchas<3){error.textContent=spanish()?'Elige al menos 3 conchas. Puedes combinar sabores.':'Choose at least 3 conchas. You can mix flavours.';return;}
     const requested=dateInput.value;populateDates();
     if(!requested||dateInput.value!==requested){error.textContent=spanish()?'Elige una fecha disponible.':'Choose an available date.';return;}
+    syncFulfilment();
     if(!form.reportValidity())return;
     const next=signature();
     if(next!==snapshot){snapshot=next;orderId='RZ-'+Date.now().toString(36).toUpperCase();opened=false;}
@@ -99,6 +113,7 @@
       document.getElementById('order-error').textContent=spanish()?'El plazo de las 18:00 para esa fecha ya cerró. Elige otra fecha.':'The 6 pm cutoff for that date has passed. Choose another date.';
       return;
     }
+    syncFulfilment();
     if(signature()!==snapshot){review.hidden=true;return;}
     const popup=window.open('https://wa.me/353873578235?text='+encodeURIComponent(message.value),'_blank');
     if(!popup){notice.textContent=spanish()?'Permite abrir WhatsApp y vuelve a intentarlo.':'Allow WhatsApp to open and try again.';return;}
@@ -106,7 +121,7 @@
     notice.textContent=spanish()?'WhatsApp abierto con TODO el pedido. Pulsa Enviar allí. No necesitas enviar las conchas por separado.':'WhatsApp opened with the COMPLETE order. Tap Send there. Do not send conchas separately.';
   };
   function refreshAvailability(){
-    const previous=dateInput.value;populateDates();updateSeason();
+    const previous=dateInput.value;populateDates();updateSeason();syncFulfilment();
     if(previous&&previous!==dateInput.value){
       review.hidden=true;
       document.getElementById('order-error').textContent=spanish()?'El plazo de las 18:00 para esa fecha ya cerró. Elige otra fecha.':'The 6 pm cutoff for that date has passed. Choose another date.';
