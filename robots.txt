@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://petitemachine.github.io/raiz-atelier/sitemap.xml

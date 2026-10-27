@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Raíz Atelier Mexican Bakery | Handmade Mexican Baking</title>
+  <meta name="description" content="Discover handmade Mexican baking from Raíz Atelier. View the menu and enquire through WhatsApp or the online order form.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#35261e;
+      --cocoa:#4a3025;
+      --clay:#7a3f2d;
+      --terracotta:#8d4932;
+      --copper:#a85f38;
+      --copper-light:#e0a77f;
+      --sand:#d4b78f;
+      --olive:#776a49;
+      --cream:#f5eee4;
+      --paper:#e8d9c6;
+      --white:#fffaf4;
+      --muted:#655047;
+      --line:#cbb49b;
+      --green:#1a7a40;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--cream); color:var(--ink); font-family:"DM Sans",sans-serif; }
+    img { display:block; width:100%; }
+    a { color:inherit; }
+    .site-nav {
+      position:sticky;
+      top:0;
+      z-index:10;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:24px;
+      padding:16px 5vw;
+      background:rgba(255,249,237,.96);
+      border-bottom:1px solid var(--line);
+    }
+    .brand { display:block; width:220px; text-decoration:none; }
+    .brand img { width:100%; height:auto; }
+    .nav-links { display:flex; align-items:center; gap:24px; font-size:13px; font-weight:700; }
+    .nav-links a { text-decoration:none; }
+    .nav-order { padding:10px 16px; border-radius:999px; background:var(--cocoa); color:var(--cream); }
+    .hero {
+      min-height:680px;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      background:var(--paper);
+    }
+    .hero-copy { display:flex; flex-direction:column; justify-content:center; padding:clamp(48px,8vw,110px); transform:translateY(-28px); }
+    .eyebrow { display:block; margin:0 0 18px; color:var(--clay); font-size:13px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { max-width:720px; margin-bottom:24px; font-family:"Playfair Display",serif; font-size:clamp(56px,8vw,106px); line-height:.88; letter-spacing:-.05em; }
+    h1 em { color:var(--clay); font-weight:600; }
+    .hero-copy > p:not(.eyebrow) { max-width:580px; color:var(--muted); font-size:18px; line-height:1.7; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border:1px solid var(--ink); border-radius:999px; font-size:14px; font-weight:700; text-decoration:none; }
+    .button.primary { background:var(--green); border-color:var(--green); color:#fff; }
+    .button.secondary { background:var(--cocoa); color:var(--cream); }
+    .hero-image { min-height:560px; height:100%; object-fit:cover; }
+    section { padding:90px 6vw; }
+    .section-heading { max-width:780px; margin-bottom:44px; }
+    .section-heading h2 { margin-bottom:14px; font-family:"Playfair Display",serif; font-size:clamp(42px,6vw,72px); line-height:1; }
+    .section-heading h2,.story h2 { position:relative; padding-left:42px; }
+    .section-heading h2::before,.story h2::before {
+      content:"";
+      position:absolute;
+      left:0;
+      top:.08em;
+      width:25px;
+      height:42px;
+      background:var(--copper);
+      -webkit-mask:url("images/espiga.svg") center/contain no-repeat;
+      mask:url("images/espiga.svg") center/contain no-repeat;
+    }
+    .section-heading p { color:var(--muted); font-size:17px; line-height:1.7; }
+    .availability-note { display:flex; align-items:center; gap:14px; margin-top:8px; }
+    .availability-note img { width:24px; height:40px; object-fit:contain; flex:0 0 auto; }
+    .minimum-order { display:inline-block; padding:9px 13px; border-left:4px solid var(--terracotta); background:var(--paper); color:var(--ink); font-size:13px; font-weight:700; }
+    .menu { background:var(--white); }
+    .product-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .product-card { overflow:hidden; background:var(--cream); border:1px solid var(--line); }
+    .product-image-button {
+      display:block;
+      width:100%;
+      padding:0;
+      border:0;
+      border-radius:0;
+      background:var(--paper);
+      cursor:zoom-in;
+    }
+    .product-image-button:focus-visible { outline:4px solid var(--copper); outline-offset:-4px; }
+    .product-image-button img { height:270px; padding:10px; background:var(--paper); object-fit:contain; object-position:center; }
+    .product-copy { padding:22px; }
+    .product-copy h3 { margin-bottom:8px; font-family:"Playfair Display",serif; font-size:29px; }
+    .seasonal-label { display:inline-block; margin-bottom:10px; padding:5px 9px; border:1px solid var(--terracotta); color:var(--terracotta); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    .flavour-list { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 9px; }
+    .flavour-option {
+      width:auto;
+      padding:7px 11px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:var(--paper);
+      color:var(--ink);
+      font-size:12px;
+      font-weight:700;
+    }
+    .flavour-option:hover,.flavour-option[aria-pressed="true"] { border-color:var(--terracotta); background:var(--terracotta); color:var(--white); }
+    .flavour-option:focus-visible { outline:3px solid var(--copper); outline-offset:2px; }
+    .menu-selection { min-height:22px; margin:8px 0 12px; color:var(--clay); font-size:13px; font-weight:700; }
+    .menu-order-link { display:inline-block; margin:0 0 16px; color:var(--terracotta); font-weight:700; }
+    .menu-order-link[hidden] { display:none; }
+    .limited-note { display:block; margin:7px 0 15px; color:var(--terracotta); font-size:13px; font-weight:700; }
+    .dietary-warning { display:block; margin:8px 0 15px; padding:8px 10px; background:#f4e1d7; color:#7a2f1f; font-size:13px; font-weight:700; }
+    .product-copy p { min-height:48px; margin-bottom:18px; color:var(--muted); line-height:1.55; }
+    .product-copy a { color:var(--terracotta); font-weight:700; text-decoration:none; }
+    .story { display:grid; grid-template-columns:.9fr 1.1fr; gap:70px; align-items:center; }
+    .story img { min-height:520px; height:100%; object-fit:cover; border-radius:220px 220px 12px 12px; }
+    .story h2 { font-family:"Playfair Display",serif; font-size:clamp(44px,6vw,76px); line-height:1; }
+    .story p { color:var(--muted); font-size:17px; line-height:1.8; }
+    .origin-purpose { background:var(--paper); }
+    .origin-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+    .origin-card { padding:clamp(28px,5vw,52px); background:var(--white); border-top:5px solid var(--terracotta); }
+    .origin-card h3 { margin-bottom:16px; font-family:"Playfair Display",serif; font-size:clamp(32px,4vw,48px); }
+    .origin-card p { color:var(--muted); font-size:16px; line-height:1.8; }
+    .origin-quote { margin:40px 0 0; color:var(--cocoa); font-family:"Playfair Display",serif; font-size:clamp(28px,4vw,48px); font-style:italic; text-align:center; }
+    .order { background:var(--cocoa); color:var(--cream); }
+    .order .eyebrow { color:var(--copper-light); }
+    .order .section-heading h2::before { background:var(--copper-light); }
+    .order .section-heading p { color:#eadbcf; }
+    .order-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:-12px 0 44px; }
+    .order-step { padding:20px; border:1px solid #806354; }
+    .order-step span { display:block; margin-bottom:9px; color:var(--copper-light); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    .order-step strong { display:block; margin-bottom:7px; font-family:"Playfair Display",serif; font-size:23px; }
+    .order-step p { margin:0; color:#eadbcf; font-size:13px; line-height:1.55; }
+    .order-layout { display:grid; grid-template-columns:.8fr 1.2fr; gap:55px; align-items:start; }
+    .channels { display:grid; gap:14px; }
+    .channel { display:block; padding:20px; border:1px solid #806354; text-decoration:none; }
+    .channel strong { display:block; margin-bottom:5px; color:var(--copper-light); }
+    .channel span { color:#eadbcf; font-size:14px; }
+    .channel.disabled { opacity:.7; }
+    form { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:28px; background:#5a3c30; }
+    label { display:block; margin-bottom:7px; color:#eee4dc; font-size:13px; font-weight:700; }
+    input,select,textarea { width:100%; padding:13px; border:1px solid #89695a; border-radius:4px; background:var(--white); color:var(--ink); font:inherit; }
+    textarea { min-height:130px; resize:vertical; }
+    .field-wide { grid-column:1/-1; }
+    .flavour-picker { grid-column:1/-1; padding:18px; border:1px solid #89695a; }
+    .flavour-picker[hidden] { display:none; }
+    .flavour-picker legend { padding:0 7px; color:#eee4dc; font-size:13px; font-weight:700; }
+    .flavour-picker > p { margin:0 0 14px; color:#eadbcf; font-size:12px; line-height:1.5; }
+    .flavour-quantities { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    button { width:100%; padding:14px 20px; border:0; border-radius:999px; background:var(--copper-light); color:var(--ink); font:700 14px "DM Sans",sans-serif; cursor:pointer; }
+    .order-note { grid-column:1/-1; margin:0; color:#eadbcf; font-size:12px; line-height:1.6; }
+    .closing-note { padding:90px 8vw; background:var(--cream); text-align:center; }
+    .closing-note::before {
+      content:"";
+      display:block;
+      width:30px;
+      height:52px;
+      margin:0 auto 24px;
+      background:var(--copper);
+      -webkit-mask:url("images/espiga.svg") center/contain no-repeat;
+      mask:url("images/espiga.svg") center/contain no-repeat;
+    }
+    .closing-note blockquote { max-width:920px; margin:0 auto; color:var(--cocoa); font-family:"Playfair Display",serif; font-size:clamp(34px,5vw,64px); font-style:italic; line-height:1.12; }
+    .lightbox {
+      position:fixed;
+      inset:0;
+      z-index:100;
+      display:grid;
+      place-items:center;
+      padding:28px;
+      background:rgba(35,22,16,.9);
+    }
+    .lightbox[hidden] { display:none; }
+    .lightbox-content { position:relative; width:min(920px,100%); margin:0; }
+    .lightbox-image { max-height:78vh; width:100%; padding:12px; background:var(--cream); object-fit:contain; }
+    .lightbox-caption { padding:12px 52px 0 0; color:var(--cream); font-size:14px; }
+    .lightbox-close {
+      position:absolute;
+      top:-18px;
+      right:-18px;
+      width:44px;
+      height:44px;
+      padding:0;
+      border:2px solid var(--cream);
+      background:var(--cocoa);
+      color:var(--cream);
+      font-size:24px;
+      line-height:1;
+    }
+    footer { display:flex; justify-content:space-between; gap:20px; padding:28px 5vw; background:#2b1e18; color:#f0e4da; font-size:12px; }
+    footer a { color:var(--copper-light); }
+    .footer-social-icons { display:inline-flex; align-items:center; gap:9px; margin-right:6px; vertical-align:middle; }
+    .footer-social-icons svg { width:18px; height:18px; fill:var(--cream); }
+    @media (max-width:850px) {
+      .hero,.story,.origin-grid,.order-layout { grid-template-columns:1fr; }
+      .order-steps { grid-template-columns:1fr 1fr; }
+      .hero-image { max-height:580px; }
+      .product-grid { grid-template-columns:1fr 1fr; }
+      .nav-links a:not(.nav-order) { display:none; }
+    }
+    @media (max-width:560px) {
+      .site-nav { padding:14px 20px; }
+      .brand { width:175px; }
+      .hero-copy,section { padding:58px 24px; }
+      .hero-copy { transform:none; }
+      .product-grid,.order-steps,form,.flavour-quantities { grid-template-columns:1fr; }
+      .field-wide { grid-column:auto; }
+      .lightbox { padding:18px; }
+      .lightbox-close { top:-12px; right:-8px; }
+      footer { flex-direction:column; }
+    }
+    .hero-image { object-position:60% center; }
+    .product-card img { object-position:60% center; }
+    footer a[aria-label="Raíz Atelier on TikTok"] svg { width:18px; height:18px; vertical-align:middle; fill:currentColor; }
+    .footer-social-icons { display:flex; flex-wrap:wrap; gap:20px; }
+    .footer-social-icons a { display:inline-flex; align-items:center; gap:7px; padding:8px 0; }
+    .footer-social-icons svg { width:18px; height:18px; fill:currentColor; flex-shrink:0; }
+    .allergen-note { font-size:12px; line-height:1.6; padding-top:12px; border-top:1px solid var(--line); }
+    .basket-choice { margin-top:20px; padding:14px; border:1px solid var(--line); display:grid; gap:8px; }
+    .basket-choice input[type="checkbox"] { width:auto; margin-right:8px; }
+    .basket-choice legend { font-weight:700; font-size:13px; }
+    #basket-summary { padding:18px; border:1px solid #89695a; }
+    .basket-row { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; padding:12px 0; border-bottom:1px solid #89695a; }
+    .basket-remove { width:auto; padding:6px 12px; font-size:12px; }
+    [hidden] { display:none !important; }
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+    #order-form { max-width:850px; margin:0 auto; }
+    .added-status { font-size:12px; min-height:18px; color:var(--terracotta); }
+    .date-notice-grid { display:grid; gap:12px; margin-top:16px; }
+    .date-notice { padding:16px; border:1px solid #89695a; border-radius:6px; background:rgba(255,255,255,.06); color:#eadbcf; font-size:13px; line-height:1.6; }
+  </style>
+  <!-- Cookie consent: Raíz Atelier -->
+  <script type="text/javascript" charset="UTF-8" src="https://cdn.cookie-script.com/s/addba4db9f67711619445246deecfc78.js"></script>
+  <!-- Microsoft Clarity: Raíz Atelier -->
+  <script type="text/plain" data-cookiescript="accepted" data-cookiecategory="performance">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xu7humwxhn");
+  </script>
+  <script src="order-schedule.js"></script>
+  <link rel="canonical" href="https://petitemachine.github.io/raiz-atelier/">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Raíz Atelier navigation">
+    <a class="brand" href="#home" aria-label="Raíz Atelier home">
+      <img src="images/Logo_Raiz_Atelier_Wordmark.png" alt="">
+    </a>
+    <div class="nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#story">Our story</a>
+      <a class="nav-order cart-link" href="#order">Order</a>
+      <label id="language-switcher" style="display:flex;align-items:center;"><span class="sr-only">Language / Idioma</span><select id="site-language" aria-label="Language / Idioma" style="font:inherit;padding:6px;border:1px solid currentColor;border-radius:4px;background:transparent;"><option value="en">English</option><option value="es">Español</option></select></label>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero" id="home">
+      <div class="hero-copy">
+        <span class="eyebrow">Mexican bakery · Small-batch baking</span>
+        <h1>A little piece of <em>Mexico</em>, baked with care.</h1>
+        <p>Small-batch Mexican breads inspired by tradition and memory. Choose your favourites from our menu.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#menu" rel="noopener noreferrer">Shop the menu</a>
+          <a class="button secondary" href="#order">View basket</a>
+        </div>
+      </div>
+      <img class="hero-image" src="images/raiz-dia-de-muertos-two-finishes.jpg" alt="Sugar and sesame Pan de Muerto from Raíz Atelier">
+    </header>
+
+
+
+    <section id="monthly-promotion" aria-labelledby="monthly-promotion-title" style="background:var(--cream,#f7f2e9);text-align:center;padding:36px 24px;">
+      <span class="eyebrow">Offer of the month</span>
+      <h2 id="monthly-promotion-title">Pan de Muerto, made to share</h2>
+      <img src="images/pan-de-muerto-editorial-detail.jpg" alt="Raíz Atelier sugar and sesame Pan de Muerto" width="1400" height="933" loading="lazy" style="display:block;width:100%;max-width:1000px;height:auto;margin:24px auto;border-radius:12px;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:32px;margin:20px 0;">
+        <div><h3>Box of 4 · €24</h3><p>Save €2</p></div>
+        <div><h3>Box of 6 · €35</h3><p>Save €4</p></div>
+      </div>
+      <p>Mix sugar and sesame to your taste.</p>
+      <a class="button primary" href="#pan-de-muerto-menu">Shop Pan de Muerto</a>
+    </section>
+
+    <section class="menu" id="menu">
+      <div class="section-heading">
+        <span class="eyebrow">Shop</span>
+        <h2>Made for sharing—or keeping to yourself.</h2>
+        <p>Choose your pieces with + and −. Mix conchas: minimum 3. Pan de Muerto box offers apply automatically.</p>
+
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <button class="product-image-button" type="button" aria-label="View Talavera Conchas image larger" data-lightbox-image="images/concha-talavera.jpg" data-lightbox-caption="Talavera Conchas"><img src="images/concha-talavera.jpg" alt="Concha decorated with blue Talavera patterns" loading="lazy"></button>
+          <div class="product-copy"><h3>Talavera Conchas</h3><p>Conchas decorated with patterns inspired by Mexican Talavera.</p><p class="product-price"><strong>€4.50 each</strong></p><p class="allergen-note"><strong>Allergens:</strong> Wheat (gluten), milk, eggs.</p><fieldset class="basket-choice" data-name="Talavera Conchas"><legend class="sr-only">Choose Talavera Conchas</legend><label for="basket-flavour-0">Variety</label><select id="basket-flavour-0" class="basket-flavour"><option>Talavera</option></select><label for="basket-pack-0">Box size</label><select id="basket-pack-0" class="basket-pack"><option value="4">Box of 4</option><option value="6">Box of 6</option></select><label for="basket-count-0">Quantity</label><input id="basket-count-0" class="basket-count" type="number" min="1" step="1" value="1"><button type="button" class="add-to-cart">Add</button><span class="added-status" aria-live="polite"></span></fieldset></div>
+        </article>
+        <article class="product-card">
+          <button class="product-image-button" type="button" aria-label="View vanilla concha image larger" data-lightbox-image="images/concha-vainilla.jpg" data-lightbox-caption="Vanilla Concha"><img src="images/concha-vainilla.jpg" alt="Vanilla concha on a wooden board" loading="lazy"></button>
+          <div class="product-copy"><h3>Vanilla Conchas</h3><p>Classic Mexican sweet bread with a vanilla topping. Made with pork lard.</p><p class="product-price"><strong>€4.50 each</strong></p><p class="allergen-note"><strong>Allergens:</strong> Wheat (gluten), milk, eggs.</p><fieldset class="basket-choice" data-name="Traditional Conchas"><legend class="sr-only">Choose Vanilla Conchas</legend><select class="basket-flavour" aria-label="Variety"><option>Vanilla</option></select></fieldset></div>
+        </article>
+        <article class="product-card">
+          <button class="product-image-button" type="button" aria-label="View chocolate concha image larger" data-lightbox-image="images/concha-chocolate-new.jpg" data-lightbox-caption="Chocolate Concha"><img src="images/concha-chocolate-new.jpg" alt="Chocolate concha on a wooden board" loading="lazy"></button>
+          <div class="product-copy"><h3>Chocolate Conchas</h3><p>Classic Mexican sweet bread with a chocolate topping. Made with pork lard.</p><p class="product-price"><strong>€4.50 each</strong></p><p class="allergen-note"><strong>Allergens:</strong> Wheat (gluten), milk, eggs.</p><fieldset class="basket-choice" data-name="Traditional Conchas"><legend class="sr-only">Choose Chocolate Conchas</legend><select class="basket-flavour" aria-label="Variety"><option>Chocolate</option></select></fieldset></div>
+        </article>
+        <article class="product-card">
+<div class="product-copy"><span class="seasonal-label">Premium</span><h3>Gourmet Butter Conchas</h3><p>Made with 100% butter, in cocoa or Mexican vanilla. No pork ingredients.</p><p class="product-price"><strong>€5 each</strong></p><p class="allergen-note"><strong>Allergens:</strong> Wheat (gluten), milk, eggs.</p><fieldset class="basket-choice" data-name="Gourmet Butter Conchas"><legend class="sr-only">Choose Gourmet Butter Conchas</legend><label for="basket-flavour-2">Variety</label><select id="basket-flavour-2" class="basket-flavour"><option>Cocoa</option><option>Mexican Vanilla</option><option>Mixed flavours</option></select><label for="basket-pack-2">Box size</label><select id="basket-pack-2" class="basket-pack"><option value="4">Box of 4</option><option value="6">Box of 6</option></select><label for="basket-count-2">Quantity</label><input id="basket-count-2" class="basket-count" type="number" min="1" step="1" value="1"><label for="gourmet-extra">Extra conchas per box</label><input id="gourmet-extra" class="basket-extra" type="number" min="0" step="1" value="0"><button type="button" class="add-to-cart">Add</button><span class="added-status" aria-live="polite"></span></fieldset></div>
+        </article>
+        <article class="product-card">
+          <div class="product-copy"><h3>Mazapán Conchas</h3><p>Filled with Mexican peanut mazapán. Until sold out. Made with pork lard.</p><p class="product-price"><strong>€5 each</strong></p><p class="allergen-note"><strong>Allergens:</strong> Wheat (gluten), milk, eggs. Peanuts.</p><fieldset class="basket-choice" data-name="Mazapán Conchas"><legend class="sr-only">Choose Mazapán Conchas</legend><label for="basket-flavour-4">Variety</label><select id="basket-flavour-4" class="basket-flavour"><option>Mazapán</option></select><label for="basket-pack-4">Box size</label><select id="basket-pack-4" class="basket-pack"><option value="4">Box of 4</option><option value="6">Box of 6</option></select><label for="basket-count-4">Quantity</label><input id="basket-count-4" class="basket-count" type="number" min="1" step="1" value="1"><button type="button" class="add-to-cart">Add</button><span class="added-status" aria-live="polite"></span></fieldset></div>
+        </article>
+      </div>
+      <div id="pan-de-muerto-menu" style="scroll-margin-top:110px;margin-top:48px;"><h2>Pan de Muerto</h2></div>
+      <div class="product-grid">
+        <article class="product-card"><button class="product-image-button" type="button" aria-label="View Sugar Pan de Muerto image larger" data-lightbox-image="images/Pan_de_muerto_con_azucar_jpg.jpg" data-lightbox-caption="Sugar Pan de Muerto"><img src="images/Pan_de_muerto_con_azucar_jpg.jpg" alt="Sugar Pan de Muerto" loading="lazy"></button><div class="product-copy"><span class="seasonal-label">Seasonal</span><h3>Sugar Pan de Muerto</h3><p>Soft seasonal Mexican sweet bread finished with sugar.</p><p class="product-price"><strong>€6.50 each</strong></p><p class="allergen-note"><strong>Allergens:</strong> Wheat (gluten), milk, eggs.</p><fieldset class="basket-choice" data-name="Pan de Muerto"><legend class="sr-only">Choose Sugar Pan de Muerto</legend><select class="basket-flavour" aria-label="Variety"><option>Sugar / Azúcar</option></select></fieldset></div></article>
+        <article class="product-card"><button class="product-image-button" type="button" aria-label="View Sesame Pan de Muerto image larger" data-lightbox-image="images/raiz-dia-de-muertos-two-finishes.jpg" data-lightbox-caption="Sesame Pan de Muerto"><img src="images/raiz-dia-de-muertos-two-finishes.jpg" alt="Sesame Pan de Muerto" loading="lazy"></button><div class="product-copy"><span class="seasonal-label">Seasonal</span><h3>Sesame Pan de Muerto</h3><p>Soft seasonal Mexican sweet bread topped with sesame.</p><p class="product-price"><strong>€6.50 each</strong></p><p class="allergen-note"><strong>Allergens:</strong> Wheat (gluten), milk, eggs, sesame.</p><fieldset class="basket-choice" data-name="Pan de Muerto"><legend class="sr-only">Choose Sesame Pan de Muerto</legend><select class="basket-flavour" aria-label="Variety"><option>Sesame / Ajonjolí</option></select></fieldset></div></article>
+        <article class="product-card">
+          <div class="product-copy"><h3>Oaxacan Pan de Muerto</h3><p>A distinct Oaxacan recipe with its own flavour.</p><p class="product-price"><strong>€5.50 each</strong></p><fieldset class="basket-choice" data-name="Oaxacan Pan de Muerto"><legend class="sr-only">Choose Oaxacan Pan de Muerto</legend><select class="basket-flavour" aria-label="Variety"><option>Oaxaqueño</option></select></fieldset></div>
+        </article>
+
+      </div>
+    </section>
+
+
+
+    <section class="menu package-offers" id="packages" aria-labelledby="packages-title"><div class="section-heading"><span class="eyebrow">Packages</span><h2 id="packages-title">Pan de Muerto boxes</h2></div><div class="product-grid">
+<article class="product-card"><div class="product-copy"><h3>Box of 4 Pan de Muerto</h3><p class="product-price"><strong>€24</strong></p><fieldset class="basket-choice" data-name="Pan de Muerto"><legend class="sr-only">Choose box of 4 Pan de Muerto</legend><label for="promo-flavour-4">Variety</label><select id="promo-flavour-4" class="basket-flavour"><option>Sugar / Azúcar</option><option>Sesame / Ajonjolí</option></select><select class="basket-pack" aria-label="Box size" hidden><option value="4">Box of 4</option></select><label for="promo-count-4">Boxes</label><input id="promo-count-4" class="basket-count" type="number" min="1" step="1" value="1"><button type="button" class="add-to-cart">Add</button><span class="added-status" aria-live="polite"></span></fieldset></div></article><article class="product-card"><div class="product-copy"><h3>Box of 6 Pan de Muerto</h3><p class="product-price"><strong>€35</strong></p><fieldset class="basket-choice" data-name="Pan de Muerto"><legend class="sr-only">Choose box of 6 Pan de Muerto</legend><label for="promo-flavour-6">Variety</label><select id="promo-flavour-6" class="basket-flavour"><option>Sugar / Azúcar</option><option>Sesame / Ajonjolí</option></select><select class="basket-pack" aria-label="Box size" hidden><option value="6">Box of 6</option></select><label for="promo-count-6">Boxes</label><input id="promo-count-6" class="basket-count" type="number" min="1" step="1" value="1"><button type="button" class="add-to-cart">Add</button><span class="added-status" aria-live="polite"></span></fieldset></div></article></div></section>
+    <section class="story" id="story">
+      <img src="images/Pan_de_muerto_con_azucar_jpg.jpg" alt="Mexican pan de muerto">
+      <div>
+        <span class="eyebrow">The idea behind Raíz</span>
+        <h2>Tradition, memory and creativity at the table.</h2>
+        <p>Raíz means “root”. The project celebrates the flavours and visual language of Mexican baking while creating warm, memorable experiences around food.</p>
+        <p>Every product is made to create a warm, memorable experience around Mexican flavours, tradition and time shared at the table.</p>
+      </div>
+    </section>
+
+    <section class="origin-purpose" aria-labelledby="origin-title">
+      <div class="section-heading">
+        <span class="eyebrow">Our roots</span>
+        <h2 id="origin-title">How Raíz Atelier began.</h2>
+        <p>Raíz grew from a desire to keep the flavours, rituals and memories of Mexican baking close—even while living far from home.</p>
+      </div>
+      <div class="origin-grid">
+        <article class="origin-card">
+          <span class="eyebrow">How it began</span>
+          <h3>A connection to home.</h3>
+          <p>Inspired by Adriana’s Mexican roots and the food traditions of Oaxaca, Raíz Atelier began as a personal exploration of breads that carry memory. Each bake became a way to reconnect with familiar flavours and share part of that cultural story with others.</p>
+        </article>
+        <article class="origin-card">
+          <span class="eyebrow">Our purpose</span>
+          <h3>Tradition made shareable.</h3>
+          <p>The purpose of Raíz is to celebrate Mexican baking through thoughtfully developed products, careful presentation and warm customer experiences. It brings together time, craft and storytelling—from the recipe and packaging to the digital ordering journey.</p>
+        </article>
+      </div>
+      <p class="origin-quote">“Authentic Mexican bread, rooted in tradition and memory.”</p>
+    </section>
+
+    <section class="order" id="order">
+      <div class="section-heading"><span class="eyebrow">Your order</span><h2>Ready for something sweet?</h2><p>Add your bread, choose a date and send your order. We’ll reply with your confirmation and payment link.</p></div>
+      <form id="order-form">
+        <section class="field-wide" id="basket-summary" aria-label="Your basket"><h3>Your basket</h3><div id="basket-lines" aria-live="polite"></div><p id="basket-total"></p><a href="#menu">Continue shopping ↑</a></section>
+        <div><label for="customer-name">Name</label><input id="customer-name" autocomplete="name" required></div>
+        <div><label for="customer-contact">Email or phone</label><input id="customer-contact" required></div>
+        <div class="field-wide"><label for="preferred-date">Delivery / collection date</label><select id="preferred-date" required><option value="">Choose a date</option></select><div class="date-notice-grid"><div class="date-notice">Order before 6 pm on Wednesday for Thursday, or before 6 pm on Saturday for Sunday.</div><div class="date-notice">Limited orders per bake. All times are Irish local time.</div></div></div>
+        <div class="field-wide"><label for="fulfilment">Collection or delivery</label><select id="fulfilment"><option>Collection in Cherrywood</option><option>Delivery</option><option value="Agreed meeting point">Agreed meeting point</option></select></div>
+        <div class="field-wide" id="delivery-field" hidden><label for="delivery-area">Delivery address / area</label><input id="delivery-area" autocomplete="street-address"><p>Delivery fee added to your total.</p></div>
+        <div class="field-wide"><label for="order-details">Notes (optional)</label><textarea id="order-details" placeholder="For an agreed meeting point, tell us the proposed place and time. Add any other order details here."></textarea></div>
+        <div class="field-wide"><p id="order-error" role="alert"></p><button type="submit">Send order on WhatsApp →</button></div>
+        <p class="order-note">WhatsApp opens with your complete order. Tap Send to share it with us.</p>
+        <details class="field-wide"><summary>Cancellations &amp; refunds</summary><p>Once confirmed and paid, orders cannot be refunded for cancellations or changes of mind. This does not affect your statutory consumer rights. Contact us if there is a problem with your order.</p></details>
+      </form>
+    </section>
+
+    <section class="closing-note" aria-label="Raíz Atelier closing thought">
+      <blockquote>“Any excuse is a good one when it brings the family we choose together over coffee and conchas.”</blockquote>
+    </section>
+    <section id="irish-ingredients" aria-labelledby="irish-ingredients-title" style="position:relative;overflow:hidden;text-align:center;padding:48px 24px;background:#f7f2e9;">
+      <img src="images/Logo_Raiz_Atelier_Wordmark.png" alt="" aria-hidden="true" style="position:absolute;width:360px;max-width:80%;opacity:.05;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;">
+      <div style="position:relative;"><span class="eyebrow">Made in Ireland</span><h2 id="irish-ingredients-title">Mexican roots. Irish ingredients.</h2><p>We use Irish butter and locally sourced ingredients in our baking.</p></div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="product-lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption" hidden>
+    <figure class="lightbox-content">
+      <button class="lightbox-close" type="button" aria-label="Close enlarged image">×</button>
+      <img class="lightbox-image" src="" alt="">
+      <figcaption class="lightbox-caption" id="lightbox-caption"></figcaption>
+    </figure>
+  </div>
+
+  <footer><span>© 2026 Raíz Atelier Mexican Bakery</span><nav class="footer-social-icons" aria-label="Follow Raíz Atelier"><a href="https://www.instagram.com/raizatelier.ie/" target="_blank" rel="noopener noreferrer" aria-label="Raíz Atelier on Instagram"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.81 5.81 0 0 1 22 7.8v8.4a5.81 5.81 0 0 1-5.8 5.8H7.8A5.81 5.81 0 0 1 2 16.2V7.8A5.81 5.81 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg><span>Instagram</span></a><a href="https://www.facebook.com/profile.php?id=61594864160646" target="_blank" rel="noopener noreferrer" aria-label="Raíz Atelier on Facebook"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M13.8 22v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5H17V4.6c-.3 0-1.2-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.2H7.8V14h2.7v8h3.3Z"/></svg><span>Facebook</span></a><a href="https://www.tiktok.com/@raizatelier.ie" target="_blank" rel="noopener noreferrer" aria-label="Raíz Atelier on TikTok"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M16.6 2c.2 1.7 1.2 3.2 2.7 4.1a6.7 6.7 0 0 0 2.7.8v3.7a10.5 10.5 0 0 1-5.3-1.5v7.2A7.7 7.7 0 1 1 10 8.7v3.8a3.9 3.9 0 1 0 2.8 3.8V2h3.8Z"/></svg><span>TikTok</span></a></nav><a href="https://petitemachine.github.io/AdrianaMarcialPortfolio/#digital-work">Created by Adriana Marcial</a></footer>
+  <script>
+    const orderForm=document.getElementById('order-form');
+    const lightbox=document.getElementById('product-lightbox');
+    const lightboxImage=lightbox.querySelector('.lightbox-image');
+    const lightboxCaption=lightbox.querySelector('.lightbox-caption');
+    const lightboxClose=lightbox.querySelector('.lightbox-close');
+    let lightboxTrigger=null;
+    function openLightbox(trigger) {
+      lightboxTrigger = trigger;
+      lightboxImage.src = trigger.dataset.lightboxImage;
+      lightboxImage.alt = trigger.querySelector("img").alt;
+      lightboxCaption.textContent = trigger.dataset.lightboxCaption;
+      lightbox.hidden = false;
+      document.body.style.overflow = "hidden";
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.hidden = true;
+      lightboxImage.src = "";
+      document.body.style.overflow = "";
+      if (lightboxTrigger) lightboxTrigger.focus();
+    }
+
+    document.querySelectorAll(".product-image-button").forEach(function (trigger) {
+      trigger.addEventListener("click", function () {
+        openLightbox(trigger);
+      });
+    });
+
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", function (event) {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !lightbox.hidden) closeLightbox();
+    });
+
+
+    const cart=[];
+    const money=n=>new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR'}).format(n);
+    function linePrice(item){if(item.name==='Pan de Muerto')return ({1:6.5,4:24,6:35}[item.pack])*item.count;const unit={'Talavera Conchas':4.50,'Traditional Conchas':4.50,'Gourmet Butter Conchas':5,'Mazapán Conchas':5,'Oaxacan Pan de Muerto':5.5}[item.name];return unit===undefined?null:unit*(item.pack+(item.extra||0))*item.count;}
+    function drawCart(){
+      const lines=document.getElementById('basket-lines');lines.replaceChildren();
+      if(!cart.length) lines.textContent='Your basket is empty.';
+      cart.forEach((item,index)=>{
+        const row=document.createElement('div');row.className='basket-row';
+        const label=document.createElement('span');label.textContent=item.name+' · '+item.flavour+' · '+item.count+' × '+(item.pack===1?'piece':'box of '+item.pack)+(item.extra?' + '+item.extra+' extra per box':'')+(linePrice(item)!==null?' · '+money(linePrice(item)):'');
+        const remove=document.createElement('button');remove.type='button';remove.className='basket-remove';remove.textContent='Remove';remove.setAttribute('aria-label','Remove '+item.name+' '+item.flavour);remove.onclick=()=>{cart.splice(index,1);document.querySelectorAll('#menu .basket-choice').forEach(c=>{if(c.dataset.name===item.name)Array.from(c.querySelectorAll('output')).forEach(o=>{if(o.parentElement.parentElement.firstChild.textContent===item.flavour)o.textContent='0';});});drawCart();};
+        row.append(label,remove);lines.append(row);
+      });
+      const conchas=cart.filter(i=>i.name.includes('Conchas')).reduce((n,i)=>n+i.count,0);
+      const pan=cart.filter(i=>i.name==='Pan de Muerto').reduce((n,i)=>n+i.count,0);
+      const prices=[0];for(let n=1;n<=pan;n++)prices[n]=Math.min(prices[n-1]+6.5,n>=4?prices[n-4]+24:Infinity,n>=6?prices[n-6]+35:Infinity);
+      const saving=pan*6.5-prices[pan];
+      const known=cart.reduce((total,item)=>total+(linePrice(item)||0),0)-saving;
+      const note=document.createElement('p');note.textContent=(conchas?(conchas<3?'Choose '+(3-conchas)+' more conchas — minimum 3.':conchas+' conchas · packed together. '):'')+(saving?'Pan de Muerto box offer applied · Save '+money(saving):'');lines.append(note);
+
+      document.getElementById('basket-total').textContent=cart.length?(cart.some(item=>linePrice(item)===null)?'Total pending concha prices': 'Subtotal: '+money(known)):'';
+      document.querySelectorAll('.cart-link').forEach(a=>a.textContent='Basket ('+cart.reduce((n,i)=>n+i.count,0)+')');
+    }
+    document.getElementById('packages').hidden=true;
+    document.querySelectorAll('#menu .basket-choice').forEach(choice=>{
+      const name=choice.dataset.name;
+      const flavours=Array.from(choice.querySelector('.basket-flavour').options).map(o=>o.value).filter(v=>!['Vanilla & Chocolate','Mixed flavours'].includes(v));
+      choice.replaceChildren();
+      const legend=document.createElement('legend');legend.className='sr-only';legend.textContent='Choose '+name;choice.append(legend);
+      flavours.forEach(flavour=>{
+        const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0';
+        const label=document.createElement('span');label.textContent=flavour;
+        const controls=document.createElement('div');controls.style.cssText='display:flex;align-items:center;gap:16px';
+        const minus=document.createElement('button');minus.type='button';minus.textContent='−';minus.setAttribute('aria-label','Remove one '+name+' '+flavour);
+        const value=document.createElement('output');value.textContent='0';value.setAttribute('aria-live','polite');
+        const plus=document.createElement('button');plus.type='button';plus.textContent='+';plus.setAttribute('aria-label','Add one '+name+' '+flavour);
+        function change(delta){let item=cart.find(i=>i.name===name&&i.flavour===flavour);if(!item&&delta>0){item={name,flavour,pack:1,count:0,extra:0};cart.push(item);}if(item){item.count=Math.max(0,item.count+delta);value.textContent=item.count;if(!item.count)cart.splice(cart.indexOf(item),1);}drawCart();}
+        minus.onclick=()=>change(-1);plus.onclick=()=>change(1);
+        controls.append(minus,value,plus);row.append(label,controls);choice.append(row);
+      });
+    });
+    drawCart();
+    const fulfilment=document.getElementById('fulfilment');
+    fulfilment.onchange=()=>{const delivery=fulfilment.value==='Delivery';document.getElementById('delivery-field').hidden=!delivery;document.getElementById('delivery-area').required=delivery;};
+    const dateInput=document.getElementById('preferred-date');
+    function populateDates(){
+      const selected=dateInput.value;
+      dateInput.replaceChildren(new Option('Choose a date',''));
+      const fmt=new Intl.DateTimeFormat(document.documentElement.lang==='es'?'es-ES':'en-IE',{timeZone:'UTC',weekday:'long',day:'numeric',month:'long'});
+      RaizSchedule.availableDates().forEach(value=>{
+        dateInput.add(new Option(fmt.format(new Date(value+'T12:00:00Z')),value));
+      });
+      if(Array.from(dateInput.options).some(o=>o.value===selected))dateInput.value=selected;
+    }
+    populateDates();
+    function buildOrderMessage(){return ['RAÍZ ATELIER — ORDER',
+      'Name: '+document.getElementById('customer-name').value.trim(),
+      'Contact: '+document.getElementById('customer-contact').value.trim(),
+      '',...cart.map(i=>i.name+' | '+i.flavour+' | '+i.count+' × '+(i.pack===1?'piece':'box of '+i.pack)+(i.extra?' + '+i.extra+' extra per box':'')+' | '+i.count*(i.pack+(i.extra||0))+' pieces'+(linePrice(i)!==null?' | '+money(linePrice(i)):'')),
+      '',document.getElementById('basket-total').textContent,
+      'Date: '+dateInput.selectedOptions[0].textContent+' ('+dateInput.value+')',
+      'Method: '+fulfilment.value,
+      ...(fulfilment.value==='Delivery'?['Address / area: '+document.getElementById('delivery-area').value.trim()]:[]),
+      ...(document.getElementById('order-details').value.trim()?['Notes: '+document.getElementById('order-details').value.trim()]:[])
+    ].join('\n');}
+    orderForm.onsubmit=event=>{
+      event.preventDefault();const error=document.getElementById('order-error');error.textContent='';
+      if(!cart.length){error.textContent='Add a product to your basket first.';return;}
+      const conchaCount=cart.filter(i=>i.name.includes('Conchas')).reduce((n,i)=>n+i.count,0);if(conchaCount>0&&conchaCount<3){error.textContent='Choose at least 3 conchas. You can mix varieties.';return;}
+      const requested=dateInput.value;populateDates();
+      if(dateInput.value!==requested||!dateInput.value){error.textContent='Please choose an available date.';dateInput.reportValidity();return;}
+      window.open('https://wa.me/353873578235?text='+encodeURIComponent(buildOrderMessage()),'_blank','noopener,noreferrer');
+    };
+  </script>
+  <script src="raiz-language.js"></script>
+  <script src="order-summary.js"></script>
+  <script src="checkout-review.js"></script>
+</body>
+</html>
