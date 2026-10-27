@@ -1,6 +1,6 @@
 // One shared calculation for the basket, review and WhatsApp request.
 (function (root) {
-  function calculate(items) {
+  function calculate(items,method='Collection in Cherrywood') {
     const units = i => i.count * (i.pack + (i.extra || 0));
     const base = {'Traditional Conchas':450,'Talavera Conchas':450,'Gourmet Butter Conchas':500,'Mazapán Conchas':500,'Oaxacan Pan de Muerto':550};
     const lines = items.map(i => {
@@ -17,7 +17,10 @@
     const conchas = lines.filter(i => i.name === 'Traditional Conchas').reduce((n,i)=>n+i.quantity,0);
     const conchaDiscount = conchas>=4 ? conchas*50 : 0;
     const gross = lines.reduce((n,i)=>n+i.cents,0);
-    return {lines,panDiscount,conchaDiscount,total:gross-panDiscount-conchaDiscount,quantity:lines.reduce((n,i)=>n+i.quantity,0)};
+    const conchaQuantity=lines.filter(i=>i.name.includes('Conchas')).reduce((n,i)=>n+i.quantity,0);
+    const fee=method==='Delivery'?null:method==='Agreed meeting point'?(conchaQuantity>6?0:200):0;
+    const subtotal=gross-panDiscount-conchaDiscount;
+    return {lines,panDiscount,conchaDiscount,subtotal,fee,total:subtotal+(fee||0),conchaQuantity,quantity:lines.reduce((n,i)=>n+i.quantity,0)};
   }
   root.RaizOrder = {calculate};
   if(typeof module!=='undefined') module.exports = root.RaizOrder;

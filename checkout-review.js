@@ -26,12 +26,27 @@
   }
   const methodNote=document.createElement('p');methodNote.setAttribute('role','status');
   fulfilment.parentElement.append(methodNote);
+  function totalsText(s){
+    const es=spanish();
+    const feeLabel=fulfilment.value==='Agreed meeting point'?(es?'Punto de encuentro':'Meeting point'):(es?'Recogida':'Collection');
+    return 'Subtotal: '+currency(s.subtotal)+'\n'+(s.fee===null?(es?'Entrega: coste pendiente de confirmar':'Delivery: fee pending confirmation'):feeLabel+': '+(s.fee?currency(s.fee):(es?'GRATIS':'FREE')))+'\n'+(s.fee===null?(es?'Total sin entrega: ':'Total excluding delivery: '):'Total: ')+currency(s.total);
+  }
+  function renderTotals(){
+    const el=document.getElementById('basket-total');el.style.whiteSpace='pre-line';
+    el.textContent=cart.length?totalsText(RaizOrder.calculate(cart,fulfilment.value)):'';
+  }
   function syncFulfilment(){
-    Array.from(fulfilment.options).forEach(option=>{option.disabled=false;});
+    const labels={
+      'Collection in Cherrywood':spanish()?'Recogida en Cherrywood — GRATIS':'Collection in Cherrywood — FREE',
+      'Delivery':spanish()?'Entrega a domicilio — coste por confirmar':'Local delivery — fee to be confirmed',
+      'Agreed meeting point':spanish()?'Punto de encuentro — €2; gratis con 7 o más conchas':'Agreed meeting point — €2; FREE with 7+ conchas'
+    };
+    Array.from(fulfilment.options).forEach(option=>{const value=option.value;option.value=value;option.disabled=false;option.textContent=labels[value]||option.textContent;});
     const delivery=fulfilment.value==='Delivery';
     document.getElementById('delivery-field').hidden=!delivery;
     document.getElementById('delivery-area').required=delivery;
     methodNote.textContent=spanish()?'Domingos y jueves: recogida en Cherrywood, entrega o punto de encuentro acordado.':'Sundays and Thursdays: collection in Cherrywood, delivery or an agreed meeting point.';
+    renderTotals();
   }
   dateInput.addEventListener('change',syncFulfilment);
   fulfilment.addEventListener('change',syncFulfilment);
@@ -48,7 +63,7 @@
   const oldDraw=drawCart;
   drawCart=function(){
     oldDraw();
-    const summary=RaizOrder.calculate(cart);
+    const summary=RaizOrder.calculate(cart,fulfilment.value);
     const container=document.getElementById('basket-lines');container.replaceChildren();
     if(!summary.lines.length){container.textContent=spanish()?'Tu carrito está vacío.':'Your basket is empty.';}
     summary.lines.forEach(item=>{
@@ -69,14 +84,14 @@
   try{const saved=JSON.parse(sessionStorage.getItem(storageKey)||'[]');RaizOrder.calculate(saved);if(Array.isArray(saved)&&saved.length)cart.splice(0,cart.length,...saved);}catch{}
   function signature(){return JSON.stringify([cart,...['customer-name','customer-contact','preferred-date','fulfilment','delivery-area','order-details'].map(id=>document.getElementById(id).value)]);}
   buildOrderMessage=function(){
-    const s=RaizOrder.calculate(cart);
+    const s=RaizOrder.calculate(cart,fulfilment.value);
     return ['RAÍZ ATELIER — ORDER REQUEST / SOLICITUD '+orderId,
       'Name: '+document.getElementById('customer-name').value.trim(),
       'Contact: '+document.getElementById('customer-contact').value.trim(),'',
       ...s.lines.map(i=>`${i.name} | ${i.flavour} | ${i.quantity} pieces | ${currency(i.cents)}`),
       ...(s.panDiscount?['Pan de Muerto discount: −'+currency(s.panDiscount)]:[]),
       ...(s.conchaDiscount?['Traditional concha discount: −'+currency(s.conchaDiscount)]:[]),
-      '',s.quantity+' pieces in ONE order / piezas en UN pedido','Subtotal: '+currency(s.total),
+      '',s.quantity+' pieces in ONE order / piezas en UN pedido',totalsText(s),
       'Date: '+dateInput.selectedOptions[0].textContent+' ('+dateInput.value+')',
       'Method: '+(fulfilment.value==='Agreed meeting point'?'Agreed meeting point / Punto de encuentro acordado':fulfilment.value),
       ...(fulfilment.value==='Agreed meeting point'?['Meeting place and time subject to confirmation / Lugar y horario sujetos a confirmación.']:[]),
