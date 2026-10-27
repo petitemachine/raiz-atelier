@@ -15,6 +15,15 @@
   document.querySelectorAll('a[href^="#"][target="_blank"]').forEach(link=>link.removeAttribute('target'));
   const spanish=()=>document.documentElement.lang==='es';
   const currency=cents=>money(cents/100);
+  const seasonNote=document.createElement('p');seasonNote.id='pan-season-note';seasonNote.style.cssText='padding:16px;border:1px solid var(--terracotta);font-weight:700;';
+  document.getElementById('pan-de-muerto-menu').append(seasonNote);
+  function updateSeason(){
+    const closed=RaizSchedule.availableDates(new Date(),35,true).length===0;
+    seasonNote.textContent=closed?(spanish()?'Pedidos de pan de muerto cerrados. Última horneada: 5 de noviembre de 2026.':'Pan de Muerto orders are closed. Final bake: 5 November 2026.'):(spanish()?'Última horneada de pan de muerto: jueves 5 de noviembre de 2026. Pedidos hasta el miércoles 4 de noviembre a las 18:00 (hora de Irlanda).':'Final Pan de Muerto bake: Thursday 5 November 2026. Order by Wednesday 4 November at 6 pm (Irish time).');
+    document.querySelectorAll('#menu .basket-choice').forEach(choice=>{
+      if(choice.dataset.name.includes('Pan de Muerto'))choice.querySelectorAll('button[aria-label^="Add one"]').forEach(button=>button.disabled=closed);
+    });
+  }
   function remember(){try{sessionStorage.setItem(storageKey,JSON.stringify(cart));}catch{}}
   function syncQuantities(){document.querySelectorAll('#menu .basket-choice').forEach(choice=>{
     choice.querySelectorAll('output').forEach(output=>{
@@ -44,7 +53,7 @@
     document.getElementById('basket-total').textContent=cart.length?'Subtotal: '+currency(summary.total):'';
     document.querySelectorAll('.cart-link').forEach(a=>a.textContent=(spanish()?'Carrito':'Basket')+' ('+summary.quantity+')');
     submit.textContent=spanish()?'Revisar pedido completo →':'Review complete order →';
-    syncQuantities();remember();review.hidden=true;
+    syncQuantities();remember();review.hidden=true;populateDates();updateSeason();
   };
   try{const saved=JSON.parse(sessionStorage.getItem(storageKey)||'[]');RaizOrder.calculate(saved);if(Array.isArray(saved)&&saved.length)cart.splice(0,cart.length,...saved);}catch{}
   function signature(){return JSON.stringify([cart,...['customer-name','customer-contact','preferred-date','fulfilment','delivery-area','order-details'].map(id=>document.getElementById(id).value)]);}
@@ -97,7 +106,7 @@
     notice.textContent=spanish()?'WhatsApp abierto con TODO el pedido. Pulsa Enviar allí. No necesitas enviar las conchas por separado.':'WhatsApp opened with the COMPLETE order. Tap Send there. Do not send conchas separately.';
   };
   function refreshAvailability(){
-    const previous=dateInput.value;populateDates();
+    const previous=dateInput.value;populateDates();updateSeason();
     if(previous&&previous!==dateInput.value){
       review.hidden=true;
       document.getElementById('order-error').textContent=spanish()?'El plazo de las 18:00 para esa fecha ya cerró. Elige otra fecha.':'The 6 pm cutoff for that date has passed. Choose another date.';

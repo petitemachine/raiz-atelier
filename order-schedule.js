@@ -1,5 +1,5 @@
 (function(root){
-  function availableDates(now=new Date(),days=35){
+  function availableDates(now=new Date(),days=35,seasonal=false){
     const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Dublin',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(now);
     const local=Object.fromEntries(parts.map(p=>[p.type,p.value]));
     const base=new Date(Date.UTC(+local.year,+local.month-1,+local.day));
@@ -9,7 +9,9 @@
       if(![0,4].includes(date.getUTCDay()))continue;
       // Fixed Irish-local cutoff, rather than a rolling number of hours.
       if(offset===1&&+local.hour>=18)continue;
-      result.push(date.toISOString().slice(0,10));
+      const value=date.toISOString().slice(0,10);
+      if(seasonal&&value>'2026-11-05')continue;
+      result.push(value);
     }
     return result;
   }

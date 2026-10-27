@@ -485,7 +485,7 @@
       const selected=dateInput.value;
       dateInput.replaceChildren(new Option('Choose a date',''));
       const fmt=new Intl.DateTimeFormat(document.documentElement.lang==='es'?'es-ES':'en-IE',{timeZone:'UTC',weekday:'long',day:'numeric',month:'long'});
-      RaizSchedule.availableDates().forEach(value=>{
+      RaizSchedule.availableDates(new Date(),35,cart.some(item=>item.name.includes('Pan de Muerto'))).forEach(value=>{
         dateInput.add(new Option(fmt.format(new Date(value+'T12:00:00Z')),value));
       });
       if(Array.from(dateInput.options).some(o=>o.value===selected))dateInput.value=selected;
